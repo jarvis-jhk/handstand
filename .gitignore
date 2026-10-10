@@ -1,0 +1,5 @@
+.tools/
+.build/
+handstand.apk
+handstand.apk.idsig
+keystore.jks

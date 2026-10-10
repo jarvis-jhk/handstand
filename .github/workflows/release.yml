@@ -1,0 +1,58 @@
+name: Release
+
+# A release is a tag vN, where N is the APK's versionCode. Obtainium compares exactly that
+# number, so N has to be larger than every earlier release: the first check refuses
+# anything else. The job runs in the "public-release" environment, which needs a
+# reviewer's approval before the signing key is handed out.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: public-release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check the tag is vN with N larger than every earlier release
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v([1-9][0-9]*)$ ]] || { echo "tag must be vN (N = versionCode), got $GITHUB_REF_NAME"; exit 1; }
+          N=${BASH_REMATCH[1]}
+          BASE=$(cat VERSION_CODE)
+          [ "$N" -ge "$BASE" ] || { echo "v$N is below VERSION_CODE $BASE"; exit 1; }
+          for t in $(git tag -l 'v*'); do
+            [ "$t" = "$GITHUB_REF_NAME" ] && continue
+            [[ "$t" =~ ^v([0-9]+)$ ]] || continue
+            [ "${BASH_REMATCH[1]}" -lt "$N" ] || { echo "v$N is not above existing tag $t"; exit 1; }
+          done
+
+      - name: Restore stable release key
+        env:
+          SIGNING_KEY_B64: ${{ secrets.SIGNING_KEY_B64 }}
+        run: |
+          test -n "$SIGNING_KEY_B64"
+          printf '%s' "$SIGNING_KEY_B64" | base64 -d > keystore.jks
+
+      - name: Build
+        env:
+          # optional; without it the key is expected to use the password "android"
+          KS_PASS: ${{ secrets.SIGNING_KEY_PASS || 'android' }}
+        run: ./build.sh
+
+      - name: Check the APK carries the tag's versionCode
+        run: |
+          AAPT2=$(ls .tools/sdk/build-tools/*/aapt2 | head -1)
+          "$AAPT2" dump badging handstand.apk | grep -q "versionCode='${GITHUB_REF_NAME#v}'"
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" handstand.apk --generate-notes --verify-tag

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- adaptive icon foreground: a figure upside down on its hands, inside the 66dp safe zone -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- the figure, 10% smaller about the middle (asked for 2026-09-14): the group scale
+         takes the stroke widths down with the coordinates, so it stays the same drawing -->
+    <group android:scaleX="0.9" android:scaleY="0.9" android:pivotX="54" android:pivotY="54">
+        <!-- legs up in a narrow V, and the torso -->
+        <path android:pathData="M46,28 L54,46 L62,28"
+            android:strokeColor="#FFFFFFFF" android:strokeWidth="7"
+            android:strokeLineCap="round" android:strokeLineJoin="round"/>
+        <path android:pathData="M54,46 L54,57"
+            android:strokeColor="#FFFFFFFF" android:strokeWidth="7"
+            android:strokeLineCap="round"/>
+        <!-- arms, spread wide enough to leave the head visible between them -->
+        <path android:pathData="M36,74 L54,57 L72,74"
+            android:strokeColor="#FFFFFFFF" android:strokeWidth="7"
+            android:strokeLineCap="round" android:strokeLineJoin="round"/>
+        <!-- the head, below the shoulders and looking at the floor -->
+        <path android:fillColor="#FFFFFFFF"
+            android:pathData="M54,70 m-5.5,0 a5.5,5.5 0 1,0 11,0 a5.5,5.5 0 1,0 -11,0"/>
+        <!-- the floor it stands on -->
+        <path android:pathData="M38,81 L70,81" android:strokeAlpha="0.55"
+            android:strokeColor="#FFFFFFFF" android:strokeWidth="4"
+            android:strokeLineCap="round"/>
+    </group>
+</vector>
