@@ -112,6 +112,5 @@ are made by hand after review, never automatically.
 
 ## 📄 License
 
-No license file yet — until one is added, all rights are reserved by the
-author. Open an issue if you'd like to use this beyond what GitHub's terms
-already allow for public repos.
+Handstand Timer is distributed under the GNU General Public License version 3
+(GPL-3.0-only); see [LICENSE](LICENSE).
