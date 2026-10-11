@@ -1,0 +1,7 @@
+Handstand Timer detects and times handstands using your phone's gravity sensor, even with the screen off and the phone in your pocket.
+
+Track a five-minute daily goal, streaks, and your best holds of the day, month and all time. Optional beeps and ticks help you follow a hold without looking at the screen. View recent sensor curves and a history of your last 200 holds.
+
+Choose the phone orientation that matches how you carry it. Recording is opt-in and runs as a foreground service; continuous sensors can use battery. Android 14 or later is required.
+
+No accounts, ads, analytics or network access. Sensor logs and hold history stay on your device.

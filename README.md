@@ -102,6 +102,19 @@ cd handstand
 first time it's needed (`keystore.jks`, password `android`). The result is
 `handstand.apk` in the repo root.
 
+For an offline F-Droid build, supply JDK 17 and an Android SDK containing build-tools
+35.0.0 and platform android-35. No downloads or signing key are needed:
+
+```sh
+JAVA_HOME=/path/to/jdk17 ANDROID_SDK_ROOT=/path/to/sdk UNSIGNED=1 VERSION_CODE=32 ./build.sh
+```
+
+The aligned unsigned result is also `handstand.apk`. `VERSION_CODE` overrides the
+tag or exported default; it must be a positive integer. `VERSION_NAME` can also be
+overridden. With identical source, version and toolchain, unsigned builds are
+byte-identical across directories. Release v32 or later is the first to use this
+reproducible packaging.
+
 ## 🚀 Releases
 
 A release is a tag `vN`, where `N` is the APK's `versionCode` and has to be larger
@@ -112,5 +125,4 @@ are made by hand after review, never automatically.
 
 ## 📄 License
 
-Handstand Timer is distributed under the GNU General Public License version 3
-(GPL-3.0-only); see [LICENSE](LICENSE).
+Handstand Timer is distributed under the GNU General Public License version 3 (GPL-3.0-only); see [LICENSE](LICENSE).
