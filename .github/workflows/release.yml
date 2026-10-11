@@ -51,7 +51,7 @@ jobs:
         run: |
           # build.sh uses the runner's preinstalled SDK when ANDROID_SDK_ROOT/ANDROID_HOME is set
           AAPT2=$(ls "${ANDROID_SDK_ROOT:-${ANDROID_HOME:-.tools/sdk}}"/build-tools/35.0.0/aapt2)
-          "$AAPT2" dump badging handstand.apk | grep -q "versionCode='${GITHUB_REF_NAME#v}'"
+          "$AAPT2" dump badging handstand.apk | grep "versionCode='${GITHUB_REF_NAME#v}'" > /dev/null
 
       - name: Release
         env:
